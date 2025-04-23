@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package backend;
+
+service BackendApi {
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+    rpc PushUrlCallback(CallbackPushRequest) returns (CallbackPushResponse);
+    rpc PushWaitingScreenCallback(CallbackPushRequest) returns (CallbackPushResponse);
+}
+
+// ------
+enum WebProtocol {
+    HTTP = 0;
+    HTTPS = 1;
+}
+
+message RegisterRequest {
+    string hideId = 1;
+    string beeId = 2;
+    int32 webPort = 3;
+    WebProtocol webProtocol = 4;
+}
+
+message RegisterResponse {
+    bool success = 1;
+}
+
+// ------
+message CallbackPushRequest {
+    string hideId = 1;
+    string beeId = 2;
+    string url = 3;
+}
+
+message CallbackPushResponse {
+    bool success = 1;
+    repeated string errors = 2;
+}

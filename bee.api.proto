@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package bee;
+
+service BeeApi {
+  rpc PushUrl(PushUrlRequest) returns (PushUrlResponse);
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc PushWaitingScreen(PushWaitingScreenRequest) returns (PushWaitingScreenResponse);
+}
+
+// ------
+message PushUrlRequest {
+  string url = 1;
+}
+
+message PushUrlResponse {
+}
+
+// ------
+message HealthCheckRequest {
+}
+
+message HealthCheckResponse {
+  bool up = 1;
+}
+
+// ------
+message PushWaitingScreenRequest {
+}
+
+message PushWaitingScreenResponse {
+}
