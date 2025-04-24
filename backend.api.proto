@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package backend;
 
+option go_package = "./backend;backend";
+
+
 service BackendApi {
     rpc Register(RegisterRequest) returns (RegisterResponse);
     rpc PushUrlCallback(CallbackPushRequest) returns (CallbackPushResponse);

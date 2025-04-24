@@ -1,0 +1,58 @@
+version: '3'
+
+vars:
+  MODULE_NAME: github.com/tonutilisateur/mon-super-module
+  VERSION: v0.2.0
+  PROTO_DIR: .
+  OUT_DIR: .
+
+tasks:
+  init:
+    desc: Initialise le module Go
+    cmds:
+      - go mod init {{.MODULE_NAME}}
+
+  tidy:
+    desc: Gère les dépendances
+    cmds:
+      - go mod tidy
+
+  commit:
+    desc: Commit les fichiers
+    cmds:
+      - git add .
+      - git commit -m "{{.MESSAGE}}"
+
+  push:
+    desc: Push vers le repo distant
+    cmds:
+      - git push origin main
+
+  tag:
+    desc: Crée et push un tag
+    cmds:
+      - git tag {{.VERSION}}
+      - git push origin {{.VERSION}}
+
+  publish:
+    desc: Commit + push + tag pour publier le module
+    cmds:
+      - task: commit
+        vars: { MESSAGE: "Release {{.VERSION}}" }
+      - task: push
+      - task: tag
+
+  protoc-bee:
+    cmds:
+      - protoc --go_out=. --go-grpc_out=. bee.api.proto
+
+  protoc-backend:
+    cmds:
+      - protoc --go_out=. --go-grpc_out=. backend.api.proto
+
+  protoc:
+    cmds:
+      - task: protoc-bee
+      - task: protoc-backend
+
+

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package bee;
 
+option go_package = "./bee;bee";
+
 service BeeApi {
   rpc PushUrl(PushUrlRequest) returns (PushUrlResponse);
   rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
